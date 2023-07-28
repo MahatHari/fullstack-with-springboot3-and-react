@@ -1,5 +1,7 @@
 package com.harimahat.customer;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +12,20 @@ import java.util.Optional;
 
 public interface CustomerDao {
 
-    public List<Customer> selectAllCustomers();
+    List<Customer> selectAllCustomers();
 
     Optional <Customer> selectCustomerById(Integer customerId);
+
+    void insertCustomer( Customer customer);
+
+    void  deleteCustomerById(Integer customerId);
+
+    void  updateCustomer(Customer update);
+
+    boolean existPersonWithEmail(String emailcustomer);
+
+    boolean existPersonWithId(Integer customerId);
+
+
+
 }
