@@ -11,14 +11,14 @@ import java.util.Optional;
  * Project learn-spring3
  */
 
-@Repository
-public class CustomerDataAccessService implements  CustomerDao{
+@Repository("list")
+public class CustomerListDataAccessService implements  CustomerDao{
 
 
 
     private final List<Customer> customers ;
 
-    public CustomerDataAccessService() {
+    public CustomerListDataAccessService() {
         this.customers= new ArrayList<>();
         Customer alex=  new Customer(1, "Alex", "alex@gmailc.om", 29);
         Customer john=  new Customer(2, "John", "john@gmailc.om", 49);
@@ -38,5 +38,35 @@ public class CustomerDataAccessService implements  CustomerDao{
                 .stream()
                 .filter(c -> c.getId().equals(customerId))
                 .findFirst();
+    }
+
+    @Override
+    public void insertCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    @Override
+    public void deleteCustomerById(Integer customerId) {
+        customers
+                .stream()
+                .filter(c->c.getId().equals(customerId))
+                .findFirst()
+                .ifPresent(customers::remove);
+    }
+
+    @Override
+    public void updateCustomer(Customer update) {
+        customers.add(update);
+    }
+
+    @Override
+    public boolean existPersonWithEmail(String email) {
+        return customers.stream()
+                .anyMatch(customer -> customer.getEmail().equals(email));
+    }
+
+    @Override
+    public boolean existPersonWithId(Integer customerId) {
+        return customers.stream().anyMatch(customer -> customer.getId().equals(customerId));
     }
 }

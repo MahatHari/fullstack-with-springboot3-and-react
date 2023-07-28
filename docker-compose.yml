@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: postgres-spring
+    image: postgres
+    environment:
+      POSTGRES_USER: harimahat
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres-spring
+    volumes:
+      - db:/data/postgres-spring
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+volumes:
+  db:
+
