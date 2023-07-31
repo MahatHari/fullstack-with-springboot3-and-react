@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Author hari.mahat on 27.7.2023
@@ -18,7 +17,7 @@ public class CustomerService {
 
     private final CustomerDao customerDao;
 
-    public CustomerService(@Qualifier("jpa") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
@@ -26,7 +25,7 @@ public class CustomerService {
         return  customerDao.selectAllCustomers();
     };
 
-    public Customer getCustomerById(Integer customerId){
+    public Customer getCustomerById(Long customerId){
         return customerDao.selectCustomerById(customerId)
                 .orElseThrow(()->new ResourceNotFoundException("Customer with id [%s] not found".formatted(customerId)));
     }
@@ -41,7 +40,7 @@ public class CustomerService {
         customerDao.insertCustomer(customer);
     }
 
-    public void deleteCustomerById(Integer customerId){
+    public void deleteCustomerById(Long customerId){
 
         if (!customerDao.existPersonWithId(customerId)){
             throw new ResourceNotFoundException("Customer with [%s] not found".formatted(customerId));
@@ -54,7 +53,7 @@ public class CustomerService {
         }*/
     }
 
-    public  void updateCustomerById(Integer customerId, CustomerUpdateRequest updateRequest){
+    public  void updateCustomerById(Long customerId, CustomerUpdateRequest updateRequest){
         boolean changes=false;
        Customer customer= getCustomerById(customerId);
 
@@ -80,7 +79,7 @@ public class CustomerService {
         if(!changes){
            throw  new RequestValidationException("no data changes found");
         }
-        customerDao.insertCustomer(customer);
+        customerDao.updateCustomer(customer);
     }
 
 }
