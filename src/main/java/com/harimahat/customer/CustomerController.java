@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 /**
  * @Author hari.mahat on 27.7.2023
  * Project learn-spring3
@@ -31,17 +29,17 @@ public class CustomerController {
     }
 
     @GetMapping("/{customerId}")
-    public Customer getCustomer(@PathVariable("customerId") Integer customerId){
+    public Customer getCustomer(@PathVariable("customerId") Long customerId){
         return customerService.getCustomerById(customerId);
     }
 
     @DeleteMapping("/{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Integer customerId){
+    public void deleteCustomer(@PathVariable("customerId") Long customerId){
         customerService.deleteCustomerById(customerId);
     }
 
     @PutMapping("/{customerId}")
-    public void updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody CustomerUpdateRequest customerUpdateRequest){
+    public void updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody CustomerUpdateRequest customerUpdateRequest){
          customerService.updateCustomerById(customerId, customerUpdateRequest);
     }
 
