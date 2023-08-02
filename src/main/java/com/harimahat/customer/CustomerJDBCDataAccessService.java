@@ -62,7 +62,6 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
 
     @Override
     public void updateCustomer(Customer update) {
-        System.out.println(update.toString());
              if(update.getName()!=null){
                  String sql= "UPDATE customer SET name = ? where id = ?";
                  int result= jdbcTemplate.update(sql, update.getName(), update.getId());

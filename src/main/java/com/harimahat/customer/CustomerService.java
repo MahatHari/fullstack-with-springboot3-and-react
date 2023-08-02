@@ -33,7 +33,7 @@ public class CustomerService {
     public void addCustomer(CustomerRegistrationRequest request){
         // check if email exists
         if(customerDao.existPersonWithEmail(request.email())){
-            throw  new DuplicateResourceException(" User with this  email already taken");
+            throw  new DuplicateResourceException("User with this  email already taken");
         }
         Customer customer= new Customer(request.name(), request.email(), request.age());
         // If it does not exist add
@@ -55,22 +55,26 @@ public class CustomerService {
 
     public  void updateCustomerById(Long customerId, CustomerUpdateRequest updateRequest){
         boolean changes=false;
-       Customer customer= getCustomerById(customerId);
 
         if(!customerDao.existPersonWithId(customerId)){
             throw  new ResourceNotFoundException("Customer with id [%s] does not exists".formatted(customerId));
         }
+
+       Customer customer= getCustomerById(customerId);
+
         if(updateRequest.name()!=null && !updateRequest.name().equals(customer.getName())){
             customer.setName(updateRequest.name());
 
             changes=true;
         }
-        if(updateRequest.email()!=null && !updateRequest.email().equals(customer.getEmail())){
+        if(updateRequest.email()!=null ){
             if(customerDao.existPersonWithEmail(updateRequest.email())){
                 throw new DuplicateResourceException("email already taken");
             }
+            if(!updateRequest.email().equals(customer.getEmail())){
             customer.setEmail(updateRequest.email());
             changes=true;
+            }
         }
         if(updateRequest.age() != null && !(updateRequest.age().equals(customer.getAge()))){
             customer.setAge(updateRequest.age());

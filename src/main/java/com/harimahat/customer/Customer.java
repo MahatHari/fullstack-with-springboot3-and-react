@@ -61,6 +61,9 @@ public  class Customer {
     public Long getId() {
         return id;
     }
+    public void setId(Long id) {
+        this.id=id;
+    }
     public String getName() {
         return name;
     }
@@ -92,8 +95,7 @@ public  class Customer {
 
         if (getId() != null ? !getId().equals(customer.getId()) : customer.getId() != null) return false;
         if (getName() != null ? !getName().equals(customer.getName()) : customer.getName() != null) return false;
-        if (getEmail() != null ? !getEmail().equals(customer.getEmail()) : customer.getEmail() != null)
-            return false;
+        if (getEmail() != null ? !getEmail().equals(customer.getEmail()) : customer.getEmail() != null) return false;
         return getAge() != null ? getAge().equals(customer.getAge()) : customer.getAge() == null;
     }
 
@@ -104,15 +106,5 @@ public  class Customer {
         result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getAge() != null ? getAge().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
     }
 }
